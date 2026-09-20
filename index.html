@@ -4646,7 +4646,22 @@
         </div>
         <div class="prd-side-body">
             <section class="prd-section">
-                <h3>1. 按键定义</h3>
+                <h3>1. 产品目标</h3>
+                <p>学生可在任意页面通过 AI 实体键发起语音或拍照提问；AI 对话框已打开时，通过实体键继续当前对话。</p>
+            </section>
+
+            <section class="prd-section">
+                <h3>2. 入口归属</h3>
+                <ul>
+                    <li>实体键统一使用首页“通用 AI 助教”，不唤起当前页面的场景 AI。</li>
+                    <li>对话框复用首页 AI 助教的快捷功能、对话能力及交互。</li>
+                    <li>历史对话统一保存在首页 AI 助教中。</li>
+                    <li>使用时长、权限及管控数据归入首页 AI 助教，不新增业务类型。</li>
+                </ul>
+            </section>
+
+            <section class="prd-section">
+                <h3>3. 按键定义</h3>
                 <div class="prd-key-grid">
                     <div class="prd-key-card">
                         <strong>单击</strong>
@@ -4660,7 +4675,7 @@
             </section>
 
             <section class="prd-section">
-                <h3>2. 会话判断</h3>
+                <h3>4. 会话与按键响应</h3>
                 <table class="prd-state-table">
                     <thead>
                         <tr><th>当前状态</th><th>单击</th><th>双击</th></tr>
@@ -4673,47 +4688,70 @@
                         </tr>
                         <tr>
                             <td>对话框已打开</td>
-                            <td>继续当前会话，复用原有语音输入交互</td>
-                            <td>继续当前会话并打开相机；确认后图片进入输入区</td>
+                            <td>继续当前会话，等同点击语音输入按钮</td>
+                            <td>继续当前会话，等同点击拍照按钮</td>
                         </tr>
                     </tbody>
                 </table>
-                <p class="prd-note">实体键新建的会话不展示欢迎语；用户发送内容后 AI 再回答。</p>
-            </section>
-
-            <section class="prd-section">
-                <h3>3. 单击逻辑</h3>
-                <ol>
-                    <li>对话框未打开：立即收音，发送后打开 AI 对话框。</li>
-                    <li>对话框已打开：等同于点击对话框内语音输入按钮，复用原有交互。</li>
-                    <li>录音中再次单击：结束录音并发送。</li>
-                    <li>AI 回答中单击：停止当前回答并进入语音输入，已有消息保留。</li>
-                </ol>
-            </section>
-
-            <section class="prd-section">
-                <h3>4. 双击逻辑</h3>
-                <ol>
-                    <li>直接打开相机，支持连续拍摄，单次最多选择 9 张。</li>
-                    <li>确认照片后打开新会话或返回当前会话，图片进入输入区待发送。</li>
-                    <li>确认照片不触发发送或 AI 回答；学生可补充文字或语音后主动发送。</li>
-                    <li>录音中双击：取消未发送的录音并打开相机。</li>
-                    <li>拍照、重拍、删除、取消和发送复用原有图片输入交互。</li>
-                </ol>
-            </section>
-
-            <section class="prd-section">
-                <h3>5. 复用与限制</h3>
-                <p>
-                    <span class="prd-tag">权限</span>
-                    <span class="prd-tag">任务限制</span>
-                    <span class="prd-tag">异常处理</span>
-                </p>
                 <ul style="margin-top: 9px;">
-                    <li>实体键与原有 AI 入口共用权限和可用状态，不得绕过原有管控。</li>
+                    <li>每次从未打开状态唤起对话框，均新建会话，不续接上一次上下文。</li>
+                    <li>新建会话不展示欢迎语，用户发送内容后 AI 再回答。</li>
+                    <li>对话框已打开时，保留当前消息和上下文。</li>
+                    <li>新建会话不删除已有历史对话。</li>
+                </ul>
+            </section>
+
+            <section class="prd-section">
+                <h3>5. 输入交互</h3>
+                <p><strong>语音输入</strong></p>
+                <ul>
+                    <li>对话框未打开时，单击后立即收音，底部展示轻量收音模块；发送后打开新会话。</li>
+                    <li>对话框内复用原有语音交互；录音中再次单击，结束并发送。</li>
+                    <li>AI 回答中单击，停止当前回答并进入语音输入，已有消息保留。</li>
+                </ul>
+                <p style="margin-top: 9px;"><strong>拍照输入</strong></p>
+                <ul>
+                    <li>双击后直接打开相机，支持连续拍摄，单次最多选择 9 张。</li>
+                    <li>确认照片后进入输入区待发送，不自动发送或触发 AI 回答。</li>
+                    <li>学生可补充文字或语音后主动发送；其余复用原有图片输入交互。</li>
+                    <li>录音中双击，取消尚未发送的录音并打开相机。</li>
+                </ul>
+                <p style="margin-top: 9px;"><strong>未发送内容</strong></p>
+                <ul>
+                    <li>输入区有未发送文字时单击：清空文字并进入语音输入。</li>
+                    <li>同时存在图片时只清空文字，待发送图片保留。</li>
+                    <li>有待发送图片时双击：保留已有图片并继续拍照，总数不超过 9 张。</li>
+                    <li>图片与后续补充的文字或语音作为同一条消息发送。</li>
+                </ul>
+            </section>
+
+            <section class="prd-section">
+                <h3>6. 展示层级与页面状态</h3>
+                <ul>
+                    <li>AI 对话框采用半屏形式，展示在当前应用页面上层。</li>
+                    <li>打开对话框时，底层页面保持原有状态。</li>
+                    <li>对话框不因底层页面内部的普通切换或刷新自动关闭。</li>
+                    <li>AI 对话触发跨页面跳转时，关闭当前对话框后执行跳转。</li>
+                </ul>
+            </section>
+
+            <section class="prd-section">
+                <h3>7. 系统状态与资源占用</h3>
+                <table class="prd-state-table">
+                    <thead><tr><th>系统状态</th><th colspan="2">按键处理</th></tr></thead>
+                    <tbody>
+                        <tr><td>关机 / 锁屏</td><td colspan="2">不响应</td></tr>
+                        <tr><td>未登录</td><td colspan="2">Toast 提示“需登录后使用”</td></tr>
+                        <tr><td>麦克风权限关闭</td><td colspan="2">复用原有权限提示及开启流程</td></tr>
+                        <tr><td>相机权限关闭</td><td colspan="2">复用原有权限提示及开启流程</td></tr>
+                    </tbody>
+                </table>
+                <ul style="margin-top: 9px;">
+                    <li>共用首页 AI 助教的权限、任务限制和可用状态，不得绕过原有管控。</li>
                     <li>AI 不可用时，不启动录音、相机或内容上传，复用原有提示。</li>
-                    <li>会话、上下文、审核、发送状态及失败重试复用原有 AI 对话逻辑。</li>
-                    <li>录音、相机和页面底部收音模块不可同时激活。</li>
+                    <li>会话创建、内容审核、发送状态、失败重试及异常提示复用原有逻辑。</li>
+                    <li>调起 AI 语音或相机时，停止页面正在进行的音频播放、音频录制、视频播放、视频录制或拍照。</li>
+                    <li>语音录制、相机及页面媒体能力不可同时占用麦克风或相机。</li>
                 </ul>
             </section>
         </div>
