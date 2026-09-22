@@ -4518,7 +4518,7 @@
         <div class="prd-side-body">
             <section class="prd-section">
                 <h3>1. 产品目标</h3>
-                <p>学生可在任意页面通过 AI 实体键发起语音或拍照提问；<span class="prd-change-old">AI 对话框已打开时，通过实体键继续当前对话。</span> <span class="prd-change-new">无论当前处于首页、首页 AI 助教对话页或各功能内的 AI 对话页，按下实体键均新建对话并弹出 AI 抽屉。</span></p>
+                <p>学生可在任意应用页面通过 AI 实体键发起语音或拍照提问。<span class="prd-change-old">无论 AI 实体键唤起的对话抽屉是否已经打开，按下实体键均新建对话。</span> <span class="prd-change-new">首页、首页 AI 助教对话页及各功能内的 AI 对话页均视为底层应用页面；AI 实体键抽屉未打开时，按键新建对话并弹出抽屉；抽屉已打开时，按键继续当前对话。</span></p>
             </section>
 
             <section class="prd-section">
@@ -4553,21 +4553,22 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>对话框未打开</td>
+                            <td>AI 实体键抽屉未打开<br>（底层可为任意应用页面）</td>
                             <td>新建会话并开始收音</td>
                             <td>新建会话并打开相机；确认后图片进入输入区</td>
                         </tr>
                         <tr>
-                            <td>对话框已打开</td>
-                            <td><span class="prd-change-old">继续当前会话，等同点击语音输入按钮</span><br><span class="prd-change-new">新建对话并弹出抽屉，开始语音录入</span></td>
-                            <td><span class="prd-change-old">继续当前会话，等同点击拍照按钮</span><br><span class="prd-change-new">新建对话并弹出抽屉，打开相机</span></td>
+                            <td>AI 实体键抽屉已打开</td>
+                            <td><span class="prd-change-old">新建对话并弹出抽屉，开始语音录入</span><br><span class="prd-change-new">继续当前会话，等同点击抽屉内的语音输入按钮</span></td>
+                            <td><span class="prd-change-old">新建对话并弹出抽屉，打开相机</span><br><span class="prd-change-new">继续当前会话，等同点击抽屉内的拍照按钮</span></td>
                         </tr>
                     </tbody>
                 </table>
                 <ul style="margin-top: 9px;">
-                    <li><span class="prd-change-old">每次从未打开状态唤起对话框，均新建会话，不续接上一次上下文。</span><br><span class="prd-change-new">每次按下实体键均新建会话，不续接当前或上一次会话上下文。</span></li>
+                    <li><span class="prd-change-old">每次按下实体键均新建会话，不续接当前或上一次会话上下文。</span><br><span class="prd-change-new">仅在 AI 实体键抽屉未打开时新建会话；抽屉已打开时继续当前会话。</span></li>
                     <li>新建会话不展示欢迎语，用户发送内容后 AI 再回答。</li>
-                    <li><span class="prd-change-old">对话框已打开时，保留当前消息和上下文。</span><br><span class="prd-change-new">原对话保留在历史记录中，新弹出的抽屉使用独立的新会话上下文。</span></li>
+                    <li><span class="prd-change-old">AI 实体键抽屉已打开时，原对话转入历史记录并新建独立会话。</span><br><span class="prd-change-new">AI 实体键抽屉已打开时，保留当前消息和上下文。</span></li>
+                    <li><span class="prd-change-new">底层应用内的 AI 对话页不视为 AI 实体键抽屉；从此类页面按键时，仍新建 AI 实体键会话并在上层弹出抽屉。</span></li>
                     <li>新建会话不删除已有历史对话。</li>
                 </ul>
             </section>
@@ -4578,9 +4579,9 @@
                 <ul>
                     <li><span class="prd-change-new">对话框未打开时，单击后立即收音，底部展示包含麦克风、波形、计时、取消和发送的轻量收音模块，并提示“正在录音”。</span></li>
                     <li><span class="prd-change-new">点击取消：丢弃本次录音并收起模块；点击发送：结束录音并打开新会话。</span></li>
-                    <li><span class="prd-change-old">对话框已打开时，单击直接进入当前对话内录音状态，复用原有语音交互，不展示 Toast。</span><br><span class="prd-change-new">对话框已打开时，按下实体键仍新建对话抽屉，并在新会话中进入语音录入；不展示 Toast。</span></li>
+                    <li><span class="prd-change-old">AI 实体键抽屉已打开时，按下实体键仍新建对话。</span><br><span class="prd-change-new">AI 实体键抽屉已打开时，单击继续当前对话，等同点击抽屉内的语音输入按钮，复用原有语音交互且不展示 Toast。</span></li>
                     <li><span class="prd-change-old">录音中再次单击，结束录音并发送。</span><br><span class="prd-change-new">录音中再次单击，丢弃本段录音并重新开始计时，提示“正在重新录音”，不触发发送。</span></li>
-                    <li><span class="prd-change-old">AI 回答中单击，停止当前回答并进入当前会话的语音输入，已有消息保留。</span><br><span class="prd-change-new">AI 回答中按下实体键，新建对话并弹出抽屉；原对话保留在历史记录中。</span></li>
+                    <li><span class="prd-change-old">AI 回答中按下实体键，新建对话并弹出抽屉。</span><br><span class="prd-change-new">AI 实体键抽屉内正在回答时单击，继续当前会话，复用抽屉内语音输入按钮的原有处理逻辑。</span></li>
                 </ul>
                 <p style="margin-top: 9px;"><strong>拍照输入</strong></p>
                 <ul>
@@ -4592,9 +4593,9 @@
                 </ul>
                 <p style="margin-top: 9px;"><strong>未发送内容</strong></p>
                 <ul>
-                    <li><span class="prd-change-old">输入区有未发送文字时单击：清空文字并进入语音输入；同时存在图片时只清空文字，待发送图片保留。</span></li>
-                    <li><span class="prd-change-old">有待发送图片时双击：保留已有图片并再次打开相机，本次确认后新增 1 张图片。</span></li>
-                    <li><span class="prd-change-new">按下实体键新建会话时，不继承原会话中未发送的文字或图片。</span></li>
+                    <li><span class="prd-change-old">AI 实体键抽屉已打开时，按键新建会话且不继承当前未发送内容。</span></li>
+                    <li><span class="prd-change-new">输入区有未发送文字时单击：清空文字并进入语音输入；同时存在图片时只清空文字，待发送图片保留。</span></li>
+                    <li><span class="prd-change-new">有待发送图片时双击：继续当前会话并复用抽屉内拍照交互；已有待发送图片的处理复用原有图片输入逻辑。</span></li>
                     <li>图片与后续补充的文字或语音作为同一条消息发送。</li>
                 </ul>
             </section>
