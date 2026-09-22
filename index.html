@@ -2350,27 +2350,6 @@
             color: var(--ink-white);
         }
 
-        /* Toast 提示 */
-        .toast {
-            position: absolute;
-            bottom: 60px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--ink-black);
-            color: var(--ink-white);
-            padding: 15px 40px;
-            border-radius: 40px;
-            font-size: 16px;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-            z-index: 200;
-        }
-
-        .toast.show {
-            opacity: 1;
-        }
-
         /* 底部模拟功能区 */
         .bottom-bar-placeholder {
             height: 60px;
@@ -2901,23 +2880,25 @@
 
         .ai-key-feedback {
             position: absolute;
-            top: 12px;
+            top: 50%;
             left: 50%;
-            transform: translate(-50%, -8px);
-            padding: 7px 13px;
-            border-radius: 16px;
+            transform: translate(-50%, -50%);
+            padding: 10px 16px;
+            border-radius: 12px;
             background: #111;
             color: #fff;
-            font-size: 12px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
             opacity: 0;
             z-index: 410;
             pointer-events: none;
-            transition: opacity 0.18s ease, transform 0.18s ease;
+            transition: opacity 0.18s ease;
         }
 
         .ai-key-feedback.show {
             opacity: 1;
-            transform: translate(-50%, 0);
         }
 
         .ai-voice-dock {
@@ -3182,7 +3163,6 @@
         }
 
         .camera-retake,
-        .camera-add-more,
         .camera-confirm {
             display: none;
             min-width: 96px;
@@ -3198,17 +3178,6 @@
             color: #fff;
         }
 
-        .camera-add-more {
-            border: 1px solid #fff;
-            background: transparent;
-            color: #fff;
-        }
-
-        .camera-add-more:disabled {
-            opacity: 0.45;
-            cursor: not-allowed;
-        }
-
         .camera-confirm {
             border: 1px solid #fff;
             background: #fff;
@@ -3218,88 +3187,7 @@
 
         .ai-camera-overlay.captured .camera-shutter { display: none; }
         .ai-camera-overlay.captured .camera-retake,
-        .ai-camera-overlay.captured .camera-add-more,
         .ai-camera-overlay.captured .camera-confirm { display: inline-flex; align-items: center; justify-content: center; }
-
-        .camera-photo-strip {
-            min-height: 76px;
-            padding: 9px 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: #242424;
-            border-top: 1px solid #555;
-            border-bottom: 1px solid #444;
-            flex-shrink: 0;
-        }
-
-        .camera-photo-count {
-            width: 58px;
-            color: #fff;
-            font-size: 12px;
-            line-height: 1.5;
-            text-align: center;
-            flex-shrink: 0;
-        }
-
-        .camera-photo-count strong {
-            display: block;
-            font-size: 18px;
-        }
-
-        .camera-photo-thumbs {
-            flex: 1;
-            min-width: 0;
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            overflow-x: auto;
-            padding: 2px;
-        }
-
-        .camera-photo-empty {
-            color: #aaa;
-            font-size: 12px;
-        }
-
-        .camera-photo-thumb-item {
-            width: 48px;
-            height: 54px;
-            border: 2px solid #fff;
-            border-radius: 5px;
-            background: #e9e8e2;
-            color: #333;
-            position: relative;
-            flex-shrink: 0;
-            overflow: visible;
-        }
-
-        .camera-photo-thumb-item::before {
-            content: attr(data-index);
-            position: absolute;
-            left: 4px;
-            bottom: 3px;
-            font-size: 10px;
-            font-weight: 700;
-        }
-
-        .camera-photo-thumb-item:nth-child(3n+2) { background: #d8d8d3; }
-        .camera-photo-thumb-item:nth-child(3n) { background: #f3f2ed; }
-
-        .camera-photo-remove {
-            position: absolute;
-            top: -7px;
-            right: -7px;
-            width: 17px;
-            height: 17px;
-            padding: 0;
-            border: 1px solid #fff;
-            border-radius: 50%;
-            background: #111;
-            color: #fff;
-            font-size: 9px;
-            cursor: pointer;
-        }
 
         /* 硬件键发起的语音消息：语音条 + 识别文本 */
         .hardware-voice-row,
@@ -4609,32 +4497,20 @@
                         <p>“人只有用心才能看清楚，重要的东西是眼睛看不见的。”</p>
                     </div>
                     <div class="camera-focus-box" aria-hidden="true"></div>
-                    <div class="camera-preview-label"><i class="fas fa-check"></i>&nbsp; 已加入待发送照片</div>
-                </div>
-                <div class="camera-photo-strip">
-                    <div class="camera-photo-count">
-                        <strong id="camera-photo-count">0/9</strong>
-                        已拍照片
-                    </div>
-                    <div class="camera-photo-thumbs" id="camera-photo-thumbs">
-                        <span class="camera-photo-empty">可连续拍摄，最多选择 9 张一起添加</span>
-                    </div>
+                    <div class="camera-preview-label">照片预览</div>
                 </div>
                 <div class="camera-demo-controls">
                     <div class="camera-control-side">
                         <button class="camera-retake" onclick="retakeAIPhoto()"><i class="fas fa-rotate-left"></i>&nbsp; 重拍</button>
                     </div>
                     <button class="camera-shutter" onclick="captureAIPhoto()" aria-label="拍照"></button>
-                    <button class="camera-add-more" id="camera-add-more" onclick="continueAIPhotoCapture()"><i class="fas fa-camera"></i>&nbsp; 继续拍</button>
                     <div class="camera-control-side">
-                        <button class="camera-confirm" id="camera-confirm" onclick="confirmAIPhoto()"><i class="fas fa-check"></i>&nbsp; 确认 1 张</button>
+                        <button class="camera-confirm" id="camera-confirm" onclick="confirmAIPhoto()"><i class="fas fa-check"></i>&nbsp; 确认</button>
                     </div>
                 </div>
             </div>
 
-            <div class="ai-key-feedback" id="ai-key-feedback">已按下 AI 键</div>
-
-            <div class="toast" id="toast">下发成功！</div>
+            <div class="ai-key-feedback" id="ai-key-feedback"></div>
 
         </div>
     </div>
@@ -4705,14 +4581,16 @@
                 <h3>5. 输入交互</h3>
                 <p><strong>语音输入</strong></p>
                 <ul>
-                    <li>对话框未打开时，单击后立即收音，底部展示轻量收音模块；发送后打开新会话。</li>
-                    <li>对话框内复用原有语音交互；录音中再次单击，结束并发送。</li>
+                    <li>对话框未打开时，单击后立即收音，底部展示轻量收音模块，并提示“正在录音”；发送后打开新会话。</li>
+                    <li>对话框内复用原有语音交互。</li>
+                    <li>录音中再次单击，丢弃本段录音并重新开始计时，提示“正在重新录音”，不触发发送。</li>
                     <li>AI 回答中单击，停止当前回答并进入语音输入，已有消息保留。</li>
                 </ul>
                 <p style="margin-top: 9px;"><strong>拍照输入</strong></p>
                 <ul>
-                    <li>双击后直接打开相机，支持连续拍摄，单次最多选择 9 张。</li>
-                    <li>确认照片后进入输入区待发送，不自动发送或触发 AI 回答。</li>
+                    <li>双击后直接打开相机，每次只拍摄 1 张，不支持连拍。</li>
+                    <li>按下拍摄按钮后进入照片预览，可选择重拍或确认。</li>
+                    <li>确认后照片进入输入区待发送，不自动发送或触发 AI 回答。</li>
                     <li>学生可补充文字或语音后主动发送；其余复用原有图片输入交互。</li>
                     <li>录音中双击，取消尚未发送的录音并打开相机。</li>
                 </ul>
@@ -4720,7 +4598,7 @@
                 <ul>
                     <li>输入区有未发送文字时单击：清空文字并进入语音输入。</li>
                     <li>同时存在图片时只清空文字，待发送图片保留。</li>
-                    <li>有待发送图片时双击：保留已有图片并继续拍照，总数不超过 9 张。</li>
+                    <li>有待发送图片时双击：保留已有图片并再次打开相机，本次确认后新增 1 张图片。</li>
                     <li>图片与后续补充的文字或语音作为同一条消息发送。</li>
                 </ul>
             </section>
@@ -4908,15 +4786,8 @@
             showToast('发布成功！学生端即将收到通知');
         }
 
-        // Toast 提示逻辑
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            toast.innerText = message;
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 2000);
-        }
+        // 本 Demo 不展示业务 Toast；AI 实体键录音状态使用独立提示。
+        function showToast() {}
         // 课外图书数据（onShelf: 是否在书架上，finished: 是否已读完）
         const readingBooksData = [
             { title: "小王子", author: "圣埃克苏佩里", category: "literature", progress: 90, onShelf: true, finished: false, coverStyle: "font-family: serif; font-size: 22px; font-weight: bold;", coverContent: "小王子" },
@@ -6098,10 +5969,10 @@
             return document.getElementById('chat-drawer-input-area')?.classList.contains('recording');
         }
 
-        function startDrawerVoiceRecording() {
+        function startDrawerVoiceRecording(showHardwareFeedback = false) {
             if (isDrawerVoiceRecording()) return;
 
-            const stoppedPendingResponse = cancelPendingAIResponse();
+            cancelPendingAIResponse();
             const inputArea = document.getElementById('chat-drawer-input-area');
             inputArea.classList.add('recording');
             drawerVoiceStartedAt = Date.now();
@@ -6109,9 +5980,15 @@
             clearInterval(drawerVoiceTimer);
             drawerVoiceTimer = setInterval(updateDrawerVoiceTime, 1000);
 
-            showAIKeyFeedback(stoppedPendingResponse
-                ? '已停止本次回答 · 开始语音追问'
-                : '当前对话 · 开始收音');
+            if (showHardwareFeedback) showAIKeyFeedback('正在录音');
+        }
+
+        function restartDrawerVoiceRecording() {
+            drawerVoiceStartedAt = Date.now();
+            updateDrawerVoiceTime();
+            clearInterval(drawerVoiceTimer);
+            drawerVoiceTimer = setInterval(updateDrawerVoiceTime, 1000);
+            showAIKeyFeedback('正在重新录音');
         }
 
         function updateDrawerVoiceTime() {
@@ -6128,10 +6005,9 @@
             document.getElementById('drawer-recording-time').textContent = '00:00';
         }
 
-        function cancelDrawerVoiceRecording(showFeedback = true) {
+        function cancelDrawerVoiceRecording() {
             if (!isDrawerVoiceRecording()) return;
             finishDrawerVoiceRecording();
-            if (showFeedback) showAIKeyFeedback('已取消录音');
         }
 
         function sendDrawerVoiceRecording() {
@@ -6145,7 +6021,6 @@
             } else {
                 sendVoiceMessageToCurrentConversation(voiceText, duration);
             }
-            showAIKeyFeedback('语音已发送给 AI');
         }
 
         // 笔记抽屉逻辑
@@ -6779,22 +6654,22 @@
         function handleAIKeySinglePress() {
             const voiceDock = document.getElementById('ai-voice-dock');
 
-            // 对话框内录音中再次单击：等同于点击“发送”
+            // 对话框内录音中再次单击：丢弃本段并重新开始录音
             if (isDrawerVoiceRecording()) {
-                sendDrawerVoiceRecording();
+                restartDrawerVoiceRecording();
                 return;
             }
 
-            // 收音中再次单击：停止并发送到当前会话
+            // 页面底部收音中再次单击：丢弃本段并重新开始录音
             if (voiceDock.classList.contains('active')) {
-                stopVoiceAndSend();
+                restartAIKeyVoice();
                 return;
             }
 
             const continueCurrentConversation = isAIDrawerOpen();
             if (continueCurrentConversation) {
                 // 与点击对话框内麦克风完全一致
-                startDrawerVoiceRecording();
+                startDrawerVoiceRecording(true);
             } else {
                 startAIKeyVoice(false);
             }
@@ -6810,7 +6685,8 @@
         function showAIKeyFeedback(message) {
             const feedback = document.getElementById('ai-key-feedback');
             clearTimeout(aiFeedbackTimer);
-            feedback.textContent = message;
+            feedback.innerHTML = '<i class="fas fa-circle-check"></i><span></span>';
+            feedback.querySelector('span').textContent = message;
             feedback.classList.add('show');
             aiFeedbackTimer = setTimeout(() => feedback.classList.remove('show'), 1500);
         }
@@ -6847,7 +6723,6 @@
 
             aiCapturedPhotos = [];
             drawerPendingPhotos = [];
-            renderAIPhotoStrip();
             renderDrawerPendingPhotos();
         }
 
@@ -6927,7 +6802,6 @@
         function removeDrawerPendingPhoto(index) {
             drawerPendingPhotos.splice(index, 1);
             renderDrawerPendingPhotos();
-            showAIKeyFeedback(`已删除，待发送 ${drawerPendingPhotos.length} 张`);
         }
 
         function queuePhotoAIResponse(photoCount) {
@@ -6987,9 +6861,15 @@
             updateAIVoiceTime();
             clearInterval(aiVoiceTimer);
             aiVoiceTimer = setInterval(updateAIVoiceTime, 1000);
-            showAIKeyFeedback(continueCurrentConversation
-                ? '当前对话 · 开始追问'
-                : '新对话 · 开始收音');
+            showAIKeyFeedback('正在录音');
+        }
+
+        function restartAIKeyVoice() {
+            aiVoiceStartedAt = Date.now();
+            updateAIVoiceTime();
+            clearInterval(aiVoiceTimer);
+            aiVoiceTimer = setInterval(updateAIVoiceTime, 1000);
+            showAIKeyFeedback('正在重新录音');
         }
 
         function updateAIVoiceTime() {
@@ -7012,7 +6892,6 @@
             const duration = Math.max(1, Math.round((Date.now() - aiVoiceStartedAt) / 1000));
             const voiceText = '我想问问，书中小王子为什么要离开自己的星球？';
             hideAIVoiceDock();
-            showAIKeyFeedback('语音已发送给 AI');
             openAIDrawer();
 
             aiHardwareMessageTimer = setTimeout(() => {
@@ -7036,10 +6915,6 @@
             overlay.classList.remove('captured');
             viewport.classList.remove('captured');
             overlay.classList.add('active');
-            renderAIPhotoStrip();
-            showAIKeyFeedback(continueCurrentConversation
-                ? '当前对话 · 添加照片'
-                : '新对话 · 调起相机');
         }
 
         function closeAICamera() {
@@ -7054,97 +6929,33 @@
             button.classList.toggle('active');
             button.style.background = button.classList.contains('active') ? '#fff' : '#333';
             button.style.color = button.classList.contains('active') ? '#111' : '#fff';
-            showAIKeyFeedback(button.classList.contains('active') ? '闪光灯已开启' : '闪光灯已关闭');
         }
 
         function captureAIPhoto() {
-            const remainingSlots = Math.max(0, 9 - drawerPendingPhotos.length);
-            if (aiCapturedPhotos.length >= remainingSlots) {
-                showAIKeyFeedback('最多支持 9 张照片');
-                return;
-            }
-
             const overlay = document.getElementById('ai-camera-overlay');
             const viewport = document.getElementById('camera-viewport');
-            const photoIndex = aiCapturedPhotos.length;
-            aiCapturedPhotos.push({
-                id: Date.now() + photoIndex,
-                label: aiPhotoSamples[photoIndex]
-            });
+            aiCapturedPhotos = [{ id: Date.now(), label: aiPhotoSamples[0] }];
             overlay.classList.add('captured');
             viewport.classList.add('captured');
-            renderAIPhotoStrip();
-            showAIKeyFeedback(`已选择 ${drawerPendingPhotos.length + aiCapturedPhotos.length}/9 张`);
         }
 
         function retakeAIPhoto() {
-            aiCapturedPhotos.pop();
+            aiCapturedPhotos = [];
             document.getElementById('ai-camera-overlay').classList.remove('captured');
             document.getElementById('camera-viewport').classList.remove('captured');
-            renderAIPhotoStrip();
-            showAIKeyFeedback('请重新拍摄');
-        }
-
-        function continueAIPhotoCapture() {
-            if (drawerPendingPhotos.length + aiCapturedPhotos.length >= 9) {
-                showAIKeyFeedback('已达到 9 张上限，请确认');
-                return;
-            }
-            document.getElementById('ai-camera-overlay').classList.remove('captured');
-            document.getElementById('camera-viewport').classList.remove('captured');
-            showAIKeyFeedback(`已保留 ${aiCapturedPhotos.length} 张，请继续拍摄`);
-        }
-
-        function removeAIPhoto(index) {
-            aiCapturedPhotos.splice(index, 1);
-            document.getElementById('ai-camera-overlay').classList.remove('captured');
-            document.getElementById('camera-viewport').classList.remove('captured');
-            renderAIPhotoStrip();
-            showAIKeyFeedback(`已删除，当前 ${drawerPendingPhotos.length + aiCapturedPhotos.length}/9 张`);
-        }
-
-        function renderAIPhotoStrip() {
-            const thumbs = document.getElementById('camera-photo-thumbs');
-            const count = document.getElementById('camera-photo-count');
-            const confirm = document.getElementById('camera-confirm');
-            const addMore = document.getElementById('camera-add-more');
-            if (!thumbs || !count || !confirm || !addMore) return;
-
-            const totalSelected = drawerPendingPhotos.length + aiCapturedPhotos.length;
-            count.textContent = `${totalSelected}/9`;
-            confirm.innerHTML = `<i class="fas fa-check"></i>&nbsp; 确认 ${aiCapturedPhotos.length} 张`;
-            addMore.disabled = totalSelected >= 9;
-            addMore.innerHTML = totalSelected >= 9
-                ? '<i class="fas fa-check"></i>&nbsp; 已达上限'
-                : '<i class="fas fa-camera"></i>&nbsp; 继续拍';
-
-            if (aiCapturedPhotos.length === 0) {
-                thumbs.innerHTML = '<span class="camera-photo-empty">可连续拍摄，最多选择 9 张一起添加</span>';
-                return;
-            }
-
-            thumbs.innerHTML = aiCapturedPhotos.map((photo, index) => `
-                <div class="camera-photo-thumb-item" data-index="${index + 1}" title="${photo.label}">
-                    <button class="camera-photo-remove" onclick="removeAIPhoto(${index})" aria-label="删除第 ${index + 1} 张照片">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            `).join('');
         }
 
         function confirmAIPhoto() {
             if (aiCapturedPhotos.length === 0) return;
 
-            const availableSlots = Math.max(0, 9 - drawerPendingPhotos.length);
-            const photosToStage = aiCapturedPhotos.slice(0, availableSlots).map(photo => ({ ...photo }));
+            const photoToStage = { ...aiCapturedPhotos[0] };
 
             closeAICamera();
             aiCapturedPhotos = [];
-            drawerPendingPhotos.push(...photosToStage);
+            drawerPendingPhotos.push(photoToStage);
             openAIDrawer();
             renderDrawerPendingPhotos();
             document.getElementById('ai-chat-drawer-input')?.focus();
-            showAIKeyFeedback(`已添加 ${photosToStage.length} 张照片 · 可补充问题后发送`);
         }
 
         function mountAIDrawerAtScreenLevel() {
