@@ -2906,16 +2906,16 @@
             left: 50%;
             bottom: 22px;
             transform: translate(-50%, calc(100% + 34px));
-            width: min(460px, calc(100% - 48px));
-            min-height: 72px;
-            padding: 12px 14px;
+            width: min(430px, calc(100% - 48px));
+            min-height: 58px;
+            padding: 8px 10px 8px 14px;
             border: 1.5px solid #111;
             border-radius: 16px;
             background: #fff;
             color: #111;
             display: flex;
             align-items: center;
-            gap: 13px;
+            gap: 10px;
             z-index: 220;
             box-shadow: 0 8px 24px rgba(0,0,0,0.22);
             opacity: 0;
@@ -2930,60 +2930,33 @@
         }
 
         .voice-dock-mic {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
+            width: 26px;
+            height: 38px;
             border: none;
-            background: #111;
-            color: #fff;
+            background: transparent;
+            color: #111;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 20px;
             flex-shrink: 0;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .voice-dock-mic::after {
-            content: '';
-            position: absolute;
-            inset: -5px;
-            border: 1px solid #111;
-            border-radius: 50%;
-            animation: aiVoicePulse 1.4s ease-out infinite;
-        }
-
-        @keyframes aiVoicePulse {
-            0% { opacity: 0.72; transform: scale(0.8); }
-            100% { opacity: 0; transform: scale(1.28); }
-        }
-
-        .voice-dock-copy {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .voice-dock-title {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 5px;
-            font-size: 14px;
-            font-weight: 700;
         }
 
         .voice-dock-time {
-            color: #666;
-            font-size: 12px;
+            color: #111;
+            font-size: 14px;
             font-variant-numeric: tabular-nums;
+            flex-shrink: 0;
         }
 
         .voice-dock-waves {
-            height: 17px;
+            flex: 1;
+            min-width: 0;
+            height: 24px;
             display: flex;
             align-items: center;
-            gap: 3px;
+            justify-content: center;
+            gap: 2px;
         }
 
         .voice-dock-waves i {
@@ -3002,15 +2975,29 @@
             50% { height: 17px; opacity: 1; }
         }
 
+        .voice-dock-cancel,
         .voice-dock-send {
+            width: 40px;
+            height: 40px;
             border: 1px solid #111;
-            border-radius: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            font-size: 15px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .voice-dock-cancel {
+            background: #fff;
+            color: #111;
+        }
+
+        .voice-dock-send {
             background: #111;
             color: #fff;
-            padding: 8px 13px;
-            font-size: 12px;
-            white-space: nowrap;
-            cursor: pointer;
         }
 
         .ai-camera-overlay {
@@ -4462,20 +4449,18 @@
 
             <!-- AI 实体键：单击后的底部收音模块 -->
             <div class="ai-voice-dock" id="ai-voice-dock" role="dialog" aria-label="AI 正在收音">
-                <button class="voice-dock-mic" onclick="stopVoiceAndSend()" aria-label="停止收音并发送">
+                <div class="voice-dock-mic" aria-hidden="true">
                     <i class="fas fa-microphone"></i>
-                </button>
-                <div class="voice-dock-copy">
-                    <div class="voice-dock-title">
-                        <span>正在收音</span>
-                        <span class="voice-dock-time" id="voice-dock-time">00:00</span>
-                    </div>
-                    <div class="voice-dock-waves" aria-hidden="true">
-                        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-                    </div>
                 </div>
-                <button class="voice-dock-send" onclick="stopVoiceAndSend()">
-                    <i class="fas fa-paper-plane"></i>&nbsp; 停止并发送
+                <div class="voice-dock-waves" aria-hidden="true">
+                    <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                </div>
+                <span class="voice-dock-time" id="voice-dock-time">00:00</span>
+                <button class="voice-dock-cancel" onclick="cancelAIKeyVoice()" aria-label="取消录音">
+                    <i class="fas fa-times"></i>
+                </button>
+                <button class="voice-dock-send" onclick="stopVoiceAndSend()" aria-label="发送录音">
+                    <i class="fas fa-arrow-up"></i>
                 </button>
             </div>
 
@@ -4581,7 +4566,8 @@
                 <h3>5. 输入交互</h3>
                 <p><strong>语音输入</strong></p>
                 <ul>
-                    <li>对话框未打开时，单击后立即收音，底部展示轻量收音模块，并提示“正在录音”；发送后打开新会话。</li>
+                    <li>对话框未打开时，单击后立即收音，底部展示包含麦克风、波形、计时、取消和发送的轻量收音模块，并提示“正在录音”。</li>
+                    <li>点击取消：丢弃本次录音并收起模块；点击发送：结束录音并打开新会话。</li>
                     <li>对话框内复用原有语音交互。</li>
                     <li>录音中再次单击，丢弃本段录音并重新开始计时，提示“正在重新录音”，不触发发送。</li>
                     <li>AI 回答中单击，停止当前回答并进入语音输入，已有消息保留。</li>
@@ -6883,6 +6869,12 @@
             document.getElementById('ai-voice-dock').classList.remove('active');
             clearInterval(aiVoiceTimer);
             aiVoiceTimer = null;
+        }
+
+        function cancelAIKeyVoice() {
+            const dock = document.getElementById('ai-voice-dock');
+            if (!dock.classList.contains('active')) return;
+            hideAIVoiceDock();
         }
 
         function stopVoiceAndSend() {
